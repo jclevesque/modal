@@ -78,5 +78,5 @@ def dr_fpr_bars(nlp_drs, lp_drs, nlp_fprs, lp_fprs, details,
 
     # save
     if file_name:
-        print 'Writing', file_name
+        print('Writing', file_name)
         plt.savefig(file_name)

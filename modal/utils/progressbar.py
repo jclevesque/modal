@@ -64,7 +64,7 @@ The progressbar module is very easy to use, yet very powerful. And
 automatically supports features like auto-resizing when available.
 """
 
-from __future__ import division
+
 
 __author__ = "Nilton Volpato"
 __author_email__ = "first-name dot last-name @ gmail.com"
@@ -80,9 +80,9 @@ except ImportError:
     pass
 import signal
 try:
-    basestring
+    str
 except NameError:
-    basestring = (str,)
+    str = (str,)
 
 class ProgressBarWidget(object):
     """This is an element of ProgressBar formatting.
@@ -184,7 +184,7 @@ class Bar(ProgressBarWidgetHFill):
         self.left = left
         self.right = right
     def _format_marker(self, pbar):
-        if isinstance(self.marker, basestring):
+        if isinstance(self.marker, str):
             return self.marker
         else:
             return self.marker.update(pbar)
@@ -286,7 +286,7 @@ class ProgressBar(object):
         except TypeError:
             # If the iterable has no length, then rely on the value provided
             # by the user, otherwise fail.
-            if not (isinstance(self.maxval, (int, long)) and self.maxval > 0):
+            if not (isinstance(self.maxval, int) and self.maxval > 0):
                 raise RuntimeError('Could not determine maxval from iterable. '
                                    'You must explicitly provide a maxval.')
         self._iterable = iter(iterable)
@@ -296,9 +296,9 @@ class ProgressBar(object):
     def __iter__(self):
         return self
 
-    def next(self):
+    def __next__(self):
         try:
-            next = self._iterable.next()
+            next = next(self._iterable)
             self.update(self.currval + 1)
             return next
         except StopIteration:
@@ -323,7 +323,7 @@ class ProgressBar(object):
                 r.append(w)
                 hfill_inds.append(i)
                 num_hfill += 1
-            elif isinstance(w, basestring):
+            elif isinstance(w, str):
                 r.append(w)
                 currwidth += len(w)
             else:

@@ -66,6 +66,7 @@ Sergey Simonenko:
 
 import sys
 import string
+from functools import reduce
 
 try:
     if sys.version >= '2.3':
@@ -90,7 +91,7 @@ def len(iterable):
         return iterable.__len__()
     
     try:
-        return len(unicode(iterable, 'utf'))
+        return len(str(iterable, 'utf'))
     except:
         return iterable.__len__()
 
@@ -143,7 +144,7 @@ class Texttable:
         """
 
         self._check_row_size(array)
-        self._header = map(str, array)
+        self._header = list(map(str, array))
 
     def add_row(self, array):
         """Add a row in the rows stack
@@ -152,7 +153,7 @@ class Texttable:
         """
 
         self._check_row_size(array)
-        self._rows.append(map(str, array))
+        self._rows.append(list(map(str, array)))
 
     def add_rows(self, rows, header=True):
         """Add several rows in the rows stack
@@ -167,7 +168,7 @@ class Texttable:
         #     usable code for python 2.1
         if header:
             if hasattr(rows, '__iter__') and hasattr(rows, 'next'):
-                self.header(rows.next())
+                self.header(next(rows))
             else:
                 self.header(rows[0])
                 rows = rows[1:]
@@ -187,7 +188,7 @@ class Texttable:
         """
 
         if len(array) != 4:
-            raise ArraySizeError, "array should contain 4 characters"
+            raise ArraySizeError("array should contain 4 characters")
         array = [ x[:1] for x in [ str(s) for s in array ] ]
         (self._char_horiz, self._char_vert,
             self._char_corner, self._char_header) = array
@@ -248,7 +249,7 @@ class Texttable:
 
         self._check_row_size(array)
         try:
-            array = map(int, array)
+            array = list(map(int, array))
             if reduce(min, array) <= 0:
                 raise ValueError
         except ValueError:
@@ -290,8 +291,8 @@ class Texttable:
         if not self._row_size:
             self._row_size = len(array)
         elif self._row_size != len(array):
-            raise ArraySizeError, "array should contain %d elements" \
-                % self._row_size
+            raise ArraySizeError("array should contain %d elements" \
+                % self._row_size)
 
     def _has_vlines(self):
         """Return a boolean, if vlines are required or not
@@ -363,7 +364,7 @@ class Texttable:
         for line in cell_lines:
             length = 0
             parts = line.split('\t')
-            for part, i in zip(parts, range(1, len(parts) + 1)):
+            for part, i in zip(parts, list(range(1, len(parts) + 1))):
                 length = length + len(part)
                 if i < len(parts):
                     length = (length/8 + 1)*8
@@ -384,7 +385,7 @@ class Texttable:
         if self._header:
             maxi = [ self._len_cell(x) for x in self._header ]
         for row in self._rows:
-            for cell,i in zip(row, range(len(row))):
+            for cell,i in zip(row, list(range(len(row)))):
                 try:
                     maxi[i] = max(maxi[i], self._len_cell(cell))
                 except (TypeError, IndexError):
@@ -447,9 +448,9 @@ class Texttable:
         for cell, width in zip(line, self._width):
             array = []
             for c in cell.split('\n'):
-                array.extend(textwrap.wrap(unicode(c, 'utf'), width))
+                array.extend(textwrap.wrap(str(c, 'utf'), width))
             line_wrapped.append(array)
-        max_cell_lines = reduce(max, map(len, line_wrapped))
+        max_cell_lines = reduce(max, list(map(len, line_wrapped)))
         for cell, valign in zip(line_wrapped, self._valign):
             if isheader:
                 valign = "t"
@@ -470,4 +471,4 @@ if __name__ == '__main__':
     table.add_rows([ ["Name", "Age", "Nickname"], 
                      ["Mr\nXavier\nHuon", 32, "Xav'"],
                      ["Mr\nBaptiste\nClement", 1, "Baby"] ])
-    print table.draw()
+    print(table.draw())

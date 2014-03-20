@@ -35,13 +35,13 @@ class TestMQ(object):
         current_peak = c_peaks
         while current_peak:
             num_peaks += 1
-            current_peak = current_peak.next
+            current_peak = current_peak.__next__
         assert len(py_peaks) == num_peaks
 
         current_peak = c_peaks
         for i in range(len(py_peaks)):
             assert py_peaks[i] == current_peak.peak.bin
-            current_peak = current_peak.next
+            current_peak = current_peak.__next__
         cdf.delete_peak_list(c_peaks)
 
     def test_track_peaks(self):
@@ -85,6 +85,6 @@ class TestMQ(object):
                 assert_almost_equals(peak.frequency,
                                      current_peak.peak.frequency,
                                      places=self.FLOAT_PRECISION)
-                current_peak = current_peak.next
+                current_peak = current_peak.__next__
 
         cdf.destroy_mq(mq_params)

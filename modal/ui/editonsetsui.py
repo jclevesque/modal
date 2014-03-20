@@ -225,4 +225,4 @@ class Ui_MainWindow(object):
         self.texture.setItemText(1, QtGui.QApplication.translate("MainWindow", "Polyphonic", None, QtGui.QApplication.UnicodeUTF8))
         self.delete_file.setText(QtGui.QApplication.translate("MainWindow", "...", None, QtGui.QApplication.UnicodeUTF8))
 
-import editonsets_rc
+from . import editonsets_rc

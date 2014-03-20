@@ -23,7 +23,7 @@ try:
     except AttributeError:
         numpy_include = numpy.get_numpy_include()
 except ImportError:
-    print 'Error: Numpy was not found.'
+    print('Error: Numpy was not found.')
     exit(1)
 
 doc_lines = __doc__.split('\n')
@@ -39,7 +39,7 @@ detectionfunctions = Extension(
     include_dirs=['src', numpy_include, '/usr/local/include',
                   '/opt/local/include'],
     libraries=['m', 'fftw3'],
-    swig_opts=['-c++']
+    swig_opts=['-c++', '-py3']
 )
 
 setup(

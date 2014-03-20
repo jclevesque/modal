@@ -14,7 +14,7 @@ def _sample_and_metadata(db, file_name):
     '''
     data = {'name': file_name}
     data['samples'] = np.array(db[file_name], dtype=np.double)
-    for attribute, value in db[file_name].attrs.iteritems():
+    for attribute, value in db[file_name].attrs.items():
         data[attribute] = value
     return data
 
@@ -53,9 +53,9 @@ def list_onset_files():
     List names of all files in the onsets database.
     Note: This is now deprecated in favour of modal.db.samples()
     '''
-    print 'Deprecation Warning: list_onset_files() is now deprecated in ',
-    print 'favour of modal.db.samples()'
-    return samples().keys()
+    print('Deprecation Warning: list_onset_files() is now deprecated in ', end=' ')
+    print('favour of modal.db.samples()')
+    return list(samples().keys())
 
 
 def list_onset_files_poly():
@@ -64,9 +64,9 @@ def list_onset_files_poly():
     Note: list_onset_files_poly() is now deprecated in favour of
     modal.db.samples()
     '''
-    print 'Deprecation Warning: This function is now deprecated in ',
-    print 'favour of modal.db.samples()'
-    return samples(None, 'texture', 'Polyphonic').keys()
+    print('Deprecation Warning: This function is now deprecated in ', end=' ')
+    print('favour of modal.db.samples()')
+    return list(samples(None, 'texture', 'Polyphonic').keys())
 
 
 def num_onsets():

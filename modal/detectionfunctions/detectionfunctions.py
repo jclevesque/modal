@@ -1,7 +1,7 @@
 import numpy as np
 import scipy.signal
-import mq
-import lp
+from . import mq
+from . import lp
 
 # -----------------------------------------------------------------------------
 # Spectral processing
@@ -63,8 +63,8 @@ def savitzky_golay(signal, num_points):
 
     # make sure num_points is valid. If not, use defaults
     if not num_points in [5, 7, 9, 11]:
-        print 'Invalid number of points to Savitzky-Golay algorithm, ',
-        print 'using default (5).'
+        print('Invalid number of points to Savitzky-Golay algorithm, ', end=' ')
+        print('using default (5).')
         num_points = 5
     n = int(num_points / 2)
     centre = n
@@ -169,8 +169,8 @@ class OnsetDetectionFunction(object):
         # give a warning if the hop size does not divide evenly into the
         # signal size
         if len(signal) % self.hop_size != 0:
-            print 'Warning: hop size (%d) is not a factor of signal size (%d)'\
-                % (self.hop_size, len(signal))
+            print('Warning: hop size (%d) is not a factor of signal size (%d)'\
+                % (self.hop_size, len(signal)))
 
         # make sure the given detection function array is large enough
         if len(detection_function) < len(signal) / self.hop_size:

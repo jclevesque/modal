@@ -8,7 +8,7 @@ import modal.onsetdetection as od
 import modal.ui.plot as trplot
 
 if len(sys.argv) != 2:
-    print 'Usage: python', __file__, '<path to wav file>'
+    print('Usage: python', __file__, '<path to wav file>')
     sys.exit(1)
 
 file_name = sys.argv[1]
@@ -33,8 +33,8 @@ if len(audio) % odf.get_frame_size() != 0:
     n_zeros = odf.get_frame_size() - (len(audio) % odf.get_frame_size())
     audio = np.hstack((audio, np.zeros(n_zeros, dtype=np.double)))
 
-print "Audio file:", file_name
-print "Total length:", float(len(audio)) / sampling_rate, "seconds"
+print("Audio file:", file_name)
+print("Total length:", float(len(audio)) / sampling_rate, "seconds")
 
 start_time = time.time()
 i = 0
@@ -51,9 +51,9 @@ while audio_pos <= len(audio) - odf.get_frame_size():
     i += 1
 run_time = time.time() - start_time
 
-print "Number of onsets detected:", len(onsets)
-print "Running time:", run_time, "seconds"
-print "Seconds per frame:", run_time / i
+print("Number of onsets detected:", len(onsets))
+print("Running time:", run_time, "seconds")
+print("Seconds per frame:", run_time / i)
 
 # plot onset detection results
 fig = plt.figure(1, figsize=(12, 12))

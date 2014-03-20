@@ -107,9 +107,7 @@
     if (PyDict_Check(    py_obj)) return "dict"        ;
     if (PyList_Check(    py_obj)) return "list"        ;
     if (PyTuple_Check(   py_obj)) return "tuple"       ;
-    if (PyFile_Check(    py_obj)) return "file"        ;
     if (PyModule_Check(  py_obj)) return "module"      ;
-    if (PyInstance_Check(py_obj)) return "instance"    ;
 
     return "unkown type";
   }

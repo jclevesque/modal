@@ -7,7 +7,7 @@ import modal.onsetdetection as od
 import modal.ui.plot as trplot
 
 if len(sys.argv) != 2:
-    print 'Usage: python', __file__, '<path to wav file>'
+    print('Usage: python', __file__, '<path to wav file>')
     sys.exit(1)
 
 file_name = sys.argv[1]
